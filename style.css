@@ -5,18 +5,19 @@ html, body {
 }
 
 body {
-    background-color: rgb(27, 25, 25);
+    background-color: rgb(10, 75, 136);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .frame {
-    background-color: brown;
+    background-color: rgb(106, 138, 138);
     height: 900px;
     width: 550px;
     border-radius: 25px;
-    padding: 20px;
+    padding: 25px 15px;
+    outline: 4px solid rgba(0, 0, 0, 0.534);
 }
 
 .contents {
@@ -53,10 +54,8 @@ body {
 .buttons * {
     max-width: 500px;
     display: flex;
-
     align-content: space-around;
-    gap: 25px;
-
+    gap: 33px;
 }
 
 .button, .digit {
@@ -64,16 +63,17 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 56px;
-    background-color: darkred;
+    font-weight: 600;
+    background-color: rgb(48, 59, 59);
     color: antiquewhite;
-    outline: 2px solid black;
+    outline: 3px solid rgba(0, 0, 0, 0.801);
     border-radius: 15px;
     height: 65px;
     width: 100px;
+    text-decoration: none;
 }
 
 .numbers {
-
     flex-wrap: wrap;    
 }
 
@@ -82,7 +82,7 @@ body {
 }
 
 .row1 *, #equal, #clear, #delete, #neg {
-    background-color: rgb(77, 13, 13);
+    background-color: rgb(27, 27, 27);
 }
 
 .row2 {
@@ -95,5 +95,11 @@ body {
 }
 
 #num0 {
-    padding: 0px 62px;
+    padding: 0px 66px;
+}
+
+.branding {
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 61%;
 }
