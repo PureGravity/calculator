@@ -58,7 +58,7 @@ body {
     gap: 33px;
 }
 
-.button, .digit {
+.button, .digit, .operator {
     display: flex;
     align-items: center;
     justify-content: center;
