@@ -32,6 +32,7 @@ body {
     background-color: rgb(169, 233, 233);
     height: 200px;
     width: 500px;
+    padding: 5px;
     border-radius: 25px;
 }
 
@@ -99,7 +100,7 @@ body {
 }
 
 .branding {
-    font-size: 20px;
+    font-size: 21px;
     font-weight: 600;
-    margin-right: 61%;
+    margin-right: 60%;
 }
