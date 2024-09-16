@@ -5,13 +5,15 @@ let lastNum;
 let calculate = document.querySelector('#equal')
 let answer = document.querySelector('.answer')
 
-let operators = Array.from(document.querySelectorAll('.operator'))
+let operatorBtn = Array.from(document.querySelectorAll('.operator'))
 let buttons = Array.from(document.querySelectorAll('.button'));
 let digit = Array.from(document.querySelectorAll('.digit'));
 
 let screenDisplay = document.querySelector('.screenDisplay');
 
 // visual feedback for buttons
+let isEnteringSecondNum = false;
+
 digit.forEach(button => {
     button.addEventListener('mousedown', function() {
         button.style.backgroundColor = 'black';
@@ -20,9 +22,14 @@ digit.forEach(button => {
         button.style.backgroundColor = '';
     });
     button.addEventListener('click', function() {
-        const digit = parseInt(button.textContent);
-        screenDisplay.textContent = parseInt(screenDisplay.textContent) === 0 ? digit : parseInt(screenDisplay.textContent) * 10 + digit;
-
+        const digit = button.textContent;
+        
+        if (screenDisplay.textContent.includes(operator) && !isEnteringSecondNum) {
+            screenDisplay.textContent += digit;
+            isEnteringSecondNum = true;
+        } else {
+            screenDisplay.textContent = parseInt(screenDisplay.textContent) === 0 ? digit : screenDisplay.textContent + digit;
+        }
     });
 });
 
@@ -35,15 +42,17 @@ buttons.forEach(button => {
     });
 });
 
-operators.forEach(button => {
+operatorBtn.forEach(button => {
     button.addEventListener('mousedown', function() {
         button.style.backgroundColor = 'black';
+        operator = button.getAttribute("data-message");
+        firstNum = parseInt(screenDisplay.textContent);
+        screenDisplay.textContent += ' ' + operator + ' ';
     });
     button.addEventListener('mouseup', function() {
         button.style.backgroundColor = '';
     });
 });
-
 // CE and DEL button functionality
 buttons.find(button => button.textContent === 'CE').addEventListener('click', function() {
     screenDisplay.textContent = '0';
@@ -59,13 +68,18 @@ function addition(x, y) {
     answer.textContent = x + y;
 };
 function subtraction(x, y) {
-    console.log(x - y);
+    answer.textContent = x - y;
 };
 function multiplication(x, y) {
-    console.log(x * y);
+    answer.textContent = x * y;
 };
 function division(x, y) {
-    console.log(x / y);
+    if (y === 0 || x === 0) {
+        answer.style.textAlign = 'center'
+        answer.textContent = 'UNACCEPTABLE CONDITIONS!'
+    } else {
+        answer.textContent = x / y;
+    }
 };
 
 function operate(num1, operator, num2) {
@@ -83,10 +97,12 @@ function operate(num1, operator, num2) {
             division(num1, num2)
             break;
         
-    }
-}
+    };
+};
 
 calculate.addEventListener('click', function() {
-    // operate(firstNum, operator, lastNum)
-    operate(7, '+', 4)    
-})
+    const secondNum = parseInt(screenDisplay.textContent.split(operator)[1]);
+    
+    operate(firstNum, operator, secondNum);
+});
+
