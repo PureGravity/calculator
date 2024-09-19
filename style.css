@@ -1,7 +1,6 @@
 html, body {
     height: 100%;
     margin: 0;
-    padding: 0;
 }
 
 body {
@@ -48,10 +47,6 @@ body {
     justify-content: flex-end;
 }
 
-/* * {
-    outline: solid 2px black;
-} */
-
 .buttons * {
     max-width: 500px;
     display: flex;
@@ -88,7 +83,6 @@ body {
 
 .row2 {
     height: 520px;
-    display: flex;
 }
 
 #clear, #delete {
