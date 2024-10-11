@@ -4,7 +4,7 @@ html, body {
 }
 
 body {
-    background-color: rgb(10, 75, 136);
+    background-image: url(./img/background.png);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,7 +12,7 @@ body {
 }
 
 .frame {
-    background-color: rgb(106, 138, 138);
+    background-color: #00a3e8;
     height: 900px;
     width: 550px;
     border-radius: 25px;
@@ -80,12 +80,13 @@ body {
     padding: 10px;
 }
 
-.row1 *, #equal, #clear, #delete, #neg {
+.row1 *, #equal, #clear, #delete, #decimal {
     background-color: rgb(27, 27, 27);
 }
 
 .row2 {
     height: 520px;
+    margin-top: 15px;
 }
 
 #clear, #delete {
@@ -93,12 +94,9 @@ body {
 }
 
 #num0 {
-    padding: 0px 66px;
+    padding: 0px 133px;
 }
 
-#equal {
-
-}
 .branding {
     font-size: 21px;
     font-weight: 600;
@@ -113,11 +111,7 @@ body {
 
 .head {
     width: 100%;
-    height: ;
+    height: auto;
     display: flex;
     justify-content: space-between;
-}
-
-* {
-    outline: red solid;
 }
