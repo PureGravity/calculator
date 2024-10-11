@@ -8,6 +8,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Consolas', monospace;
 }
 
 .frame {
@@ -40,6 +41,8 @@ body {
     display: flex;
     align-items: flex-end;
     height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .answer {
@@ -93,8 +96,28 @@ body {
     padding: 0px 66px;
 }
 
+#equal {
+
+}
 .branding {
     font-size: 21px;
     font-weight: 600;
-    margin-right: 60%;
+    margin-left: 25px;
+}
+
+.gitInfo *{
+    height: 30px;
+    width: auto;
+    margin-right: 25px;
+}
+
+.head {
+    width: 100%;
+    height: ;
+    display: flex;
+    justify-content: space-between;
+}
+
+* {
+    outline: red solid;
 }
