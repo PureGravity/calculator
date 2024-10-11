@@ -1,119 +1,84 @@
-let firstNum;
-let operator;
-let lastNum;
+let firstNum = null;
+let operator = null;
+let calculationDone = false;
 
-let calculate = document.querySelector('#equal')
-let answer = document.querySelector('.answer')
+const calculateBtn = document.querySelector('#equal');
+const answerDisplay = document.querySelector('.answer');
+const operatorButtons = Array.from(document.querySelectorAll('.operator'));
+const numberButtons = Array.from(document.querySelectorAll('.digit'));
+const screenDisplay = document.querySelector('.screenDisplay');
 
-let operatorBtn = Array.from(document.querySelectorAll('.operator'))
-let buttons = Array.from(document.querySelectorAll('.button'));
-let digit = Array.from(document.querySelectorAll('.digit'));
-
-let screenDisplay = document.querySelector('.screenDisplay');
-
-// visual feedback for buttons
-let isEnteringSecondNum = false;
-
-function addButtonFeedback(buttons) {
-    buttons.forEach(button => {
-        button.addEventListener('mousedown', () => button.style.backgroundColor = 'black');
-        button.addEventListener('mouseup', () => button.style.backgroundColor = '');
-    });
+function resetCalculator() {
+    firstNum = null;
+    operator = null;
+    screenDisplay.textContent = '0';
+    answerDisplay.textContent = '';
+    calculationDone = false;
 }
-addButtonFeedback(digit);
-addButtonFeedback(operatorBtn);
 
-digit.forEach(button => {
+// Digit Button clicks
+numberButtons.forEach(button => {
     button.addEventListener('click', function() {
         const digit = button.textContent;
 
-        if (digit === '.' && screenDisplay.textContent.includes('.')) return;
+        if (calculationDone) {
+            resetCalculator();
+        }
 
-        if (screenDisplay.textContent.includes(operator) && !isEnteringSecondNum) {
-            screenDisplay.textContent += digit;
-            isEnteringSecondNum = true;
+        if (screenDisplay.textContent.length >= 10) return;
+
+        if (screenDisplay.textContent === '0') {
+            screenDisplay.textContent = digit;
         } else {
-            screenDisplay.textContent = parseFloat(screenDisplay.textContent) === 0 ? digit : screenDisplay.textContent + digit;
+            screenDisplay.textContent += digit;
         }
     });
 });
 
-operatorBtn.forEach(button => {
-    button.addEventListener('mousedown', function() {
+// Operator button clicks
+operatorButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        if (calculationDone) {
+            resetCalculator();
+        }
+
+        if (operator) return;
+
         operator = button.getAttribute("data-message");
         firstNum = parseFloat(screenDisplay.textContent);
         screenDisplay.textContent += ' ' + operator + ' ';
     });
 });
 
-// CE and DEL button functionality
-buttons.find(button => button.textContent === 'CE').addEventListener('click', function() {
-    screenDisplay.textContent = '0';
-    answer.textContent = '';
+// Calculate result
+calculateBtn.addEventListener('click', function() {
+    const secondNum = parseFloat(screenDisplay.textContent.split(operator)[1]?.trim());
+    if (operator && !isNaN(secondNum)) {
+        let result = operate(firstNum, operator, secondNum);
+        answerDisplay.textContent = result;
+        calculationDone = true;
+    }
 });
-buttons.find(button => button.textContent === 'DEL').addEventListener('click', function() {
+
+// Basic operations
+function operate(num1, operator, num2) {
+    let result;
+    switch (operator) {
+        case '+':
+            return num1 + num2;
+        case '-':
+            return num1 - num2;
+        case '*':
+            return num1 * num2;
+        case '/':
+            if (num2 === 0) return "Unacceptable!";
+            return num1 / num2;
+    }
+}
+
+// Clear and delete buttons functionality
+document.querySelector('#clear').addEventListener('click', resetCalculator);
+document.querySelector('#delete').addEventListener('click', function() {
     let currentDisplay = screenDisplay.textContent;
     screenDisplay.textContent = currentDisplay.length > 1 ? currentDisplay.slice(0, -1) : '0';
 });
-
-// Handle the negation (±) button functionality
-document.querySelector('#neg').addEventListener('click', function() {
-    let displayContent = screenDisplay.textContent;
-
-    if (isEnteringSecondNum) {
-        let secondNum = displayContent.split(operator)[1].trim();
-        if (secondNum.startsWith('-')) {
-            screenDisplay.textContent = displayContent.replace(' -' + secondNum.slice(1), ' ' + secondNum.slice(1));
-        } else {
-            screenDisplay.textContent = displayContent.replace(secondNum, '-' + secondNum);
-        }
-    } else {
-        if (displayContent.startsWith('-')) {
-            screenDisplay.textContent = displayContent.slice(1);  // Remove the negative sign
-        } else {
-            screenDisplay.textContent = '-' + displayContent;  // Add the negative sign
-        }
-    }
-});
-// operator button functionality
-function addition(x, y) {
-    return x + y;
-};
-function subtraction(x, y) {
-    return x - y;
-};
-function multiplication(x, y) {
-    return x * y;
-};
-function division(x, y) {
-    if (y === 0 || x === 0) {
-        answer.style.textAlign = 'center'
-        answer.textContent = 'UNACCEPTABLE CONDITIONS!'
-    } else {
-        return x / y;
-    }
-};
-
-function operate(num1, operator, num2) {
-    switch (operator) {
-        case '+':
-            result = addition(num1, num2);
-            break;
-        case '-':
-            result = subtraction(num1, num2);
-            break;
-        case '*':
-            result = multiplication(num1, num2);
-            break;
-        case '/':
-            result = division(num1, num2);
-            break;
-    }
-    answer.textContent = result;
-};
-
-calculate.addEventListener('click', function() {
-    const secondNum = parseFloat(screenDisplay.textContent.split(operator)[1]);
-    operate(firstNum, operator, secondNum);
-});
-
